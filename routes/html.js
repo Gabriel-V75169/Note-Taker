@@ -1,7 +1,9 @@
-const express = require('express').Router();
+const Router = require('express').Router();
+const path = require('path');
 
 Router.get('/notes', (req, res) => {
-    res.json(`${req.method} request received`);
+    res.sendFile(path.join(__dirname,'../public/notes.html'));
 });
 
-module.exports = express;
+
+module.exports = Router;
