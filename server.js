@@ -8,8 +8,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
-app.use('./', html);
+app.use('/', html);
 
-app.use('./api', api);
+app.use('/api', api);
 
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`))

@@ -1,20 +1,19 @@
-const app = require('express').Router();
-const { Router } = require('express');
+const notes = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
-const {readFromFile, readAndAppend, writeToFile} = require('../helpers/fsUtils');
-const uuid = require('../helpers/uuid');
+const {readFromFile, readAndAppend} = require('../helpers/fsUtils');
 
-app.get('/', (req, res) => {
-    readFromFile('.db/db.json').then((data) => res.json(JSON.parse(data)));
+notes.get('/', (req, res) => {
+    console.info(`${req.method} request recieved for notes`);
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-app.post('/', (req, res) => {
+notes.post('/', (req, res) => {
     const {title, text} = req.body;
-    if (title && text) {
+    if (req.body) {
         const newNote = {
             title,
             text,
-            id: uuidv4,
+            id: uuidv4(),
         };
         readAndAppend(newNote, './db/db.json');
         const response = {
@@ -28,9 +27,4 @@ app.post('/', (req, res) => {
     }
 });
 
-app.delete('/:id', (req, res) => {
-    const newId = req.params.id;
-    
-})
-
-module.exports = app;
+module.exports = notes;
